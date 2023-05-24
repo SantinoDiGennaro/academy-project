@@ -1,0 +1,92 @@
+<div class="d-flex justify-content-around my-3">
+  <div>
+    <a class="btn btn-primary" routerLink="/students">Students</a>
+  </div>
+
+  <div>
+    <button class="btn btn-outline-secondary" (click)="getAll()">
+      Get all
+    </button>
+  </div>
+
+  <div class="input-group mb-3" style="width: 35%">
+    <span class="input-group-text">€</span>
+    <input
+      type="text"
+      class="form-control w-30"
+      aria-label="Amount (to the nearest euro)"
+      placeholder="Inserire valore minimo"
+      [(ngModel)]="minValue"
+    />
+    <input
+      type="text"
+      class="form-control w-30"
+      aria-label="Amount (to the nearest euro)"
+      placeholder="Inserire valore massimo"
+      [(ngModel)]="maxValue"
+    />
+    <span class="input-group-text">.00</span>
+    <button
+      class="btn btn-outline-secondary"
+      (click)="getByRange(minValue, maxValue)"
+    >
+      Get by range
+    </button>
+  </div>
+
+  <div class="input-group mb-3" style="width: 35%">
+    <span class="input-group-text" id="basic-addon1">@</span>
+    <input
+      type="text"
+      class="form-control w-30"
+      placeholder="Ragione sociale"
+      aria-label="Username"
+      aria-describedby="basic-addon1"
+      list="clienti"
+    />
+    <datalist id="clienti">
+      <option
+        *ngFor="let customer of customers"
+        [value]="customer.ragioneSociale"
+      ></option>
+    </datalist>
+    <!-- <button class="btn btn-outline-secondary" (click)="getByName(name)">
+      Get by name
+    </button> -->
+  </div>
+  <div>
+    <a class="btn btn-primary ms-5" routerLink="/bill/add"> Add Bill </a>
+  </div>
+</div>
+
+<div class="m-5 rounded" style="border: solid 2px black">
+  <table class="table table-striped" *ngIf="bills?.length">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Numero Fattura</th>
+        <th scope="col">Importo</th>
+        <th scope="col">Cliente</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let bill of bills">
+        <tr>
+          <th scope="row">{{ bill.idFattura }}</th>
+          <td>{{ bill.numero }}</td>
+          <td>{{ bill.importo }}.00 €.</td>
+          <td>{{ bill.cliente.ragioneSociale }}</td>
+          <td>
+            <a
+              class="btn btn-outline-warning"
+              routerLink="/bills/{{ bill.idFattura }}"
+              >Edit</a
+            >
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <h2 *ngIf="!bills?.length" class="text-center">No bill found</h2>
+</div>

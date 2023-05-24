@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-around my-3">
+  <div>
+    <a class="btn btn-primary" routerLink="/students">Students</a>
+  </div>
+
+  <div>
+    <button class="btn btn-outline-secondary" (click)="getAll()">
+      Get all
+    </button>
+  </div>
+
+  <div class="input-group mb-3" style="width: 35%">
+    <span class="input-group-text">€</span>
+    <input
+      type="text"
+      class="form-control w-30"
+      aria-label="Amount (to the nearest euro)"
+      [(ngModel)]="amount"
+    />
+    <span class="input-group-text">.00</span>
+    <button class="btn btn-outline-secondary" (click)="getByAmount(amount)">
+      Get by amount
+    </button>
+  </div>
+
+  <div class="input-group mb-3" style="width: 35%">
+    <span class="input-group-text" id="basic-addon1">@</span>
+    <input
+      type="text"
+      class="form-control w-30"
+      placeholder="Ragione sociale"
+      aria-label="Username"
+      aria-describedby="basic-addon1"
+      [(ngModel)]="name"
+    />
+    <button class="btn btn-outline-secondary" (click)="getByName(name)">
+      Get by name
+    </button>
+  </div>
+</div>
+
+<div>
+  <a class="btn btn-primary ms-5" routerLink="/customers/add"> Add customer </a>
+</div>
+
+<div class="m-5 rounded" style="border: solid 2px black">
+  <table class="table table-striped" *ngIf="customers?.length">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Ragione Sociale</th>
+        <th scope="col">Tipo cliente</th>
+        <th scope="col">Partita Iva</th>
+        <th scope="col">Email</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Via</th>
+        <th scope="col">Fatturato</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let customer of customers">
+        <tr>
+          <th scope="row">{{ customer.idCliente }}</th>
+          <td>{{ customer.ragioneSociale }}</td>
+          <td>{{ customer.partitaIva }}</td>
+          <td>{{ customer.tipoCliente }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.telefono }}</td>
+          <td>
+            {{ customer.indirizzo | customerAddress }}
+          </td>
+          <td>{{ customer.fatturato }}</td>
+          <td>
+            <a
+              class="btn btn-outline-warning"
+              routerLink="/customers/{{ customer.idCliente }}"
+              >Edit</a
+            >
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <h2 *ngIf="!customers?.length" class="text-center">No client found</h2>
+</div>

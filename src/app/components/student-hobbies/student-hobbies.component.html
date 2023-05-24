@@ -1,0 +1,8 @@
+<div>
+  Hi! My hobbies are
+  <ul>
+    <li *ngFor="let hobbie of hobbies; let last = last">
+      {{ hobbie.name + (!last ? ", " : "") }}
+    </li>
+  </ul>
+</div>

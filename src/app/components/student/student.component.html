@@ -1,0 +1,39 @@
+<section *ngIf="student">
+  <div
+    class="card mb-3"
+    [ngStyle]="{
+      'background-color': student.gender === 'M' ? 'CornflowerBlue' : 'pink'
+    }"
+    style="width: 30rem"
+  >
+    <div class="card-header d-flex justify-content-between">
+      <academy-student-info
+        [nome]="student.name"
+        [cognome]="student.surname"
+        [eta]="student.age"
+      />
+
+      <i
+        [ngClass]="
+          student.gender === 'M' ? 'fa-solid fa-mars' : 'fa-solid fa-venus'
+        "
+      ></i>
+    </div>
+    <div class="card-body">
+      <academy-student-hobbies [hobbies]="student.hobbies" />
+      <academy-student-lang [lingue]="student.knownLanguages" />
+    </div>
+    <div class="card-footer d-flex gap-4 justify-content-center">
+      <academy-resonance
+        [likes]="student.resonance.likes"
+        [dislikes]="student.resonance.dislikes"
+        (like)="student.resonance.likes = student.resonance.likes + 1"
+        (dislike)="student.resonance.dislikes = student.resonance.dislikes + 1"
+      />
+      <button (click)="remove.emit(student)" class="btn btn-danger">
+        Remove
+      </button>
+      <button (click)="goTo()" class="btn btn-secondary">Modifica</button>
+    </div>
+  </div>
+</section>

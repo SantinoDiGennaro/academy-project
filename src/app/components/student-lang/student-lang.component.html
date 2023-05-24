@@ -1,0 +1,9 @@
+<div>
+  I can also speak fluently in
+  <ul>
+    <li *ngFor="let lingua of lingue; let last = last">
+      <i class="fi fi-{{ lingua.icon }}"></i>
+      {{ lingua.name + (!last ? ", " : "") }}
+    </li>
+  </ul>
+</div>
