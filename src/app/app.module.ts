@@ -19,11 +19,14 @@ import { BillsComponent } from './features/bills/bills.component';
 import { CustomerFormComponent } from './features/customer-form/customer-form.component';
 import { CustomerAddressPipe } from './features/customers/customer-address.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { LoadingInterceptor } from './providers/interceptors/loading.interceptor';
 import { DelayInterceptor } from './providers/interceptors/delay.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BillFormComponent } from './bill-form/bill-form.component';
 import { LoggedGuard } from './services/guards/logged.guard';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { isLoggedDirective } from './directives/isLogged.directive';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,7 @@ import { LoggedGuard } from './services/guards/logged.guard';
     CustomerFormComponent,
     CustomerAddressPipe,
     BillFormComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,9 @@ import { LoggedGuard } from './services/guards/logged.guard';
     HttpClientModule,
     FormsModule,
     MatProgressSpinnerModule,
+    MatToolbarModule,
     BrowserAnimationsModule,
+    isLoggedDirective,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },

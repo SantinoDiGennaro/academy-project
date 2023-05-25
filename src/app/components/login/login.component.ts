@@ -42,7 +42,6 @@ export class LoginComponent {
 
   constructor(
     private readonly router: Router,
-    private readonly utils: UtilsService,
     private readonly loginservice: LoginService
   ) {}
 
@@ -56,7 +55,7 @@ export class LoginComponent {
       )
     ) {
       alert('Login eseguito');
-      this.loginservice.user$.next(this.form.value as User);
+      this.loginservice.setUser(this.form.value as User);
       this.router.navigateByUrl('students');
     } else {
       alert('Dati errati');

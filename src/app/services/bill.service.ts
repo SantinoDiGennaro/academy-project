@@ -21,12 +21,12 @@ export class BillService {
     );
   }
 
-  // getByCustomer(customer: Customer): Observable<Array<Bill>> {
-  //   return this.http.get<Array<Bill>>(
-  //     `${envirorment.apiUrl}/fattura/getbycliente`,
-  //     customer
-  //   );
-  // }
+  getByCustomer(customer: Customer): Observable<Array<Bill>> {
+    return this.http.post<Array<Bill>>(
+      `${envirorment.apiUrl}/fattura/getbycliente`,
+      customer
+    );
+  }
 
   insertBill(bill: Bill): Observable<Bill> {
     return this.http.post<Bill>(

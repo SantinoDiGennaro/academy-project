@@ -1,0 +1,28 @@
+<mat-toolbar class="d-flex justify-content-evenly align-items-center">
+  <span>Academy Project</span>
+  <a class="btn ms-5 mb-3" style="color: white" routerLink="/students">
+    Studenti
+  </a>
+
+  <a class="btn ms-5 mb-3" style="color: white" routerLink="/customers">
+    Clienti
+  </a>
+  <a class="btn ms-5 mb-3" style="color: white" routerLink="/bills">
+    Fatture
+  </a>
+
+  <div class="dropdown-center">
+    <button
+      class="btn dropdown-toggle"
+      style="color: white"
+      type="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      {{ user }}
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+    </ul>
+  </div>
+</mat-toolbar>

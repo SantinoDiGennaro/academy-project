@@ -1,7 +1,5 @@
-<a class="btn btn-primary ms-5 mb-3 mt-5" routerLink="/students">Studets</a>
-
 <form
-  class="d-flex flex-column ps-5 gap-2"
+  class="d-flex flex-column ps-5 gap-2 mt-3 pb-3"
   style="width: 250px"
   [formGroup]="form"
 >
@@ -303,5 +301,7 @@
       Add experience
     </button>
   </div>
-  <button class="btn btn-primary" (click)="save()">Add</button>
+  <button type="button" class="btn btn-primary" (click)="save()">
+    {{ edit ? "Salva" : "Aggiungi" }} studente
+  </button>
 </form>

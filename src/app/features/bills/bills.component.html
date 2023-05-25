@@ -1,9 +1,5 @@
 <div class="d-flex justify-content-around my-3">
   <div>
-    <a class="btn btn-primary" routerLink="/students">Students</a>
-  </div>
-
-  <div>
     <button class="btn btn-outline-secondary" (click)="getAll()">
       Get all
     </button>
@@ -43,6 +39,7 @@
       aria-label="Username"
       aria-describedby="basic-addon1"
       list="clienti"
+      (change)="filterByName($event)"
     />
     <datalist id="clienti">
       <option
@@ -50,9 +47,6 @@
         [value]="customer.ragioneSociale"
       ></option>
     </datalist>
-    <!-- <button class="btn btn-outline-secondary" (click)="getByName(name)">
-      Get by name
-    </button> -->
   </div>
   <div>
     <a class="btn btn-primary ms-5" routerLink="/bill/add"> Add Bill </a>
@@ -76,12 +70,18 @@
           <td>{{ bill.numero }}</td>
           <td>{{ bill.importo }}.00 €.</td>
           <td>{{ bill.cliente.ragioneSociale }}</td>
-          <td>
+          <td class="d-flex gap-2">
             <a
               class="btn btn-outline-warning"
               routerLink="/bills/{{ bill.idFattura }}"
               >Edit</a
             >
+            <button
+              class="btn btn-outline-info"
+              (click)="getByCustomer(bill.cliente)"
+            >
+              Get all my bill
+            </button>
           </td>
         </tr>
       </ng-container>

@@ -8,18 +8,11 @@ import { Observable, delay } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'academy-project';
   loading$: Observable<boolean>;
 
-  constructor(
-    private readonly router: Router,
-    private readonly utils: UtilsService
-  ) {
+  constructor(private readonly utils: UtilsService) {
     this.loading$ = this.utils.loading$.pipe(delay(100));
-  }
-
-  ngOnInit(): void {
-    this.router.navigateByUrl('login');
   }
 }

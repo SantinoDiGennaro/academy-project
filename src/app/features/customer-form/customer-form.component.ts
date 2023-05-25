@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   catchError,
@@ -39,6 +39,7 @@ export class CustomerFormComponent {
   constructor(
     private readonly customerservice: CustomerService,
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly facadeService: CustomerFacadeService
   ) {
     this.facadeService.comuni$
@@ -239,7 +240,10 @@ export class CustomerFormComponent {
       // else fa ciò di cui sotto
       if (confirm('Sicuro di voler eliminare il cliente?')) {
         this.customerservice.deleteClient(this.id!).subscribe({
-          next: () => alert('Cliente eliminato'),
+          next: () => {
+            alert('Cliente eliminato');
+            this.router.navigateByUrl('/customers');
+          },
         });
       } else {
         alert('Eliminazione annullata');

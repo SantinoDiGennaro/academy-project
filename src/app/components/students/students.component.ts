@@ -16,21 +16,26 @@ export class StudentsComponent {
   search = '';
 
   ngOnInit(): void {
-    this.students = structuredClone(STUDENTS);
+    if (localStorage.getItem('academy_students')) {
+      this.students = JSON.parse(localStorage.getItem('academy_students')!);
+    } else {
+      this.fill();
+    }
   }
 
   fill(): void {
     this.students = structuredClone(STUDENTS);
+    localStorage.setItem('academy_students', JSON.stringify(this.students));
   }
 
   removeAll(): void {
+    localStorage.removeItem('academy_students');
     this.students = [];
   }
 
   remove(student: Student): void {
-    const studentFullName = student.name + student.surname;
-    this.students = this.students?.filter(
-      (el) => el.name + el.surname !== studentFullName
-    );
+    const studentId = student.id;
+    this.students = this.students?.filter((el) => el.id !== studentId);
+    localStorage.setItem('academy_students', JSON.stringify(this.students));
   }
 }

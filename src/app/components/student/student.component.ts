@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { STUDENTS } from 'src/app/data/studentsClassList';
 import { Student } from 'src/app/models/student.class';
 
 @Component({

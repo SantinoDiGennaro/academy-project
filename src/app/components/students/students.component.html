@@ -2,11 +2,7 @@
   Angular's course student:
   <academy-count [count]="students?.length" />
 </h3>
-
 <a class="btn btn-primary ms-5 mb-3" routerLink="/form">Form</a>
-<a class="btn btn-primary ms-5 mb-3" routerLink="/customers">Clienti</a>
-<a class="btn btn-primary ms-5 mb-3" routerLink="/bills">Fatture</a>
-
 <ng-container *ngIf="students">
   <div class="d-flex justify-content-center gap-5 my-3">
     <button (click)="fill()" class="btn btn-info">Ripristina</button>

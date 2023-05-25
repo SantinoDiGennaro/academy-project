@@ -13,7 +13,7 @@ export class BillsComponent {
   bills: Array<Bill> | undefined;
   minValue: number = 0;
   maxValue: number = 0;
-  customers: Array<Customer> | undefined;
+  customers: Array<any> | undefined;
 
   constructor(
     private readonly billservice: BillService,
@@ -41,5 +41,17 @@ export class BillsComponent {
     this.billservice.getByRange(min, max).subscribe({
       next: (bills) => (this.bills = bills),
     });
+  }
+
+  getByCustomer(customer: Customer): void {
+    this.billservice.getByCustomer(customer).subscribe({
+      next: (bills) => (this.bills = bills),
+    });
+  }
+
+  filterByName(e: any): void {
+    this.bills = this.bills?.filter((el) =>
+      el.cliente.ragioneSociale.includes(e.target.value)
+    );
   }
 }

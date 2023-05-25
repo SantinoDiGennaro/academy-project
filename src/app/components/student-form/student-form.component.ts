@@ -1,10 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { STUDENTS } from 'src/app/data/studentsClassList';
 import { GenderOption } from 'src/app/models/gender.type';
@@ -30,9 +25,11 @@ import {
   templateUrl: './student-form.component.html',
   styleUrls: ['./student-form.component.scss'],
 })
-export class StudentFormComponent implements OnInit {
+export class StudentFormComponent {
   form!: FormGroup<StudentForm>;
+  edit: boolean = false;
   @Output() saveStudent: EventEmitter<Student> = new EventEmitter<Student>();
+  students!: Array<Student>;
 
   get hobbies(): FormArray<FormGroup<StudentFormHobby>> {
     return this.form.get('hobbies') as FormArray<FormGroup<StudentFormHobby>>;
@@ -58,8 +55,9 @@ export class StudentFormComponent implements OnInit {
     this.route.paramMap.subscribe({
       next: (map: ParamMap) => {
         if (map.has('id')) {
+          this.edit = true;
           const name = map.get('id');
-          const student = STUDENTS.filter((el) => el.name === name)[0];
+          const student = STUDENTS.find((el) => el.name === name);
           console.log(student);
 
           this.form = this.createForm(student);
@@ -69,19 +67,7 @@ export class StudentFormComponent implements OnInit {
         }
       },
     });
-  }
-
-  ngOnInit(): void {
-    // this.route.paramMap.subscribe({
-    //   next: (map: ParamMap) => {
-    //     if (map.has('id')) {
-    //       const name = map.get('id');
-    //       console.log(STUDENTS.filter((el) => el.name === name)[0]);
-    //     } else {
-    //       console.log('nada');
-    //     }
-    //   },
-    // });
+    this.students = JSON.parse(localStorage.getItem('academy_students')!);
   }
 
   createForm(student?: Student): FormGroup<StudentForm> {
@@ -205,38 +191,41 @@ export class StudentFormComponent implements OnInit {
   }
 
   save(): void {
-    console.log(this.form.value);
+    const newValue: Student = new Student({
+      name: this.form.value.personalInformation?.name as Required<string>,
+      surname: this.form.value.personalInformation?.surname as Required<string>,
+      gender: this.form.value.personalInformation
+        ?.gender as Required<GenderOption>,
+      age: this.form.value.personalInformation?.age as Required<number>,
+      location: {
+        city: this.form.value.location?.city as Required<string>,
+        postalCode: this.form.value.location?.postalCode as Required<string>,
+        address: this.form.value.location?.address as Required<string>,
+        state: this.form.value.location?.state as Required<string>,
+        country: this.form.value.location?.country as Required<string>,
+      },
+      hobbies: this.form.value.hobbies as Required<Hobby[]>,
+      pets: this.form.value.pets as Required<Pet[]>,
+      knownLanguages: this.form.value.knownLanguages as Required<Language[]>,
+      jobExperiences: this.form.value.jobExperiences as Required<
+        StudentExperience[]
+      >,
+    });
+
     this.route.paramMap.subscribe({
       next: (map: ParamMap) => {
         if (map.has('id')) {
           const name = map.get('id');
-          // const newValue = {
-          //   name: this.form.value.personalInformation?.name,
-          //   surname: this.form.value.personalInformation?.surname,
-          //   gender: this.form.value.personalInformation?.gender,
-          //   age: this.form.value.personalInformation?.age,
-          //   location: {
-          //     city: this.form.value.location?.city,
-          //     postalCode: this.form.value.location?.postalCode,
-          //     address: this.form.value.location?.address,
-          //     state: this.form.value.location?.state,
-          //     country: this.form.value.location?.country,
-          //   },
-          //   hobbies: this.form.value.hobbies,
-          //   pets: this.form.value.pets,
-          //   knownLanguages: this.form.value.knownLanguages,
-          //   jobExperiences: this.form.value.jobExperiences,
-          //   resonance: { likes: 0, dislkes: 0 },
-          // };
-          const index = STUDENTS.indexOf(
-            STUDENTS.filter((el) => el.name === name)[0]
+          const index = this.students.indexOf(
+            this.students.filter((el) => el.name === name)[0]
           );
-          // STUDENTS[index] = new Student(newValue);
+          this.students[index] = newValue;
         } else {
-          console.log('nada');
+          this.students.push(new Student(newValue));
         }
       },
     });
+    localStorage.setItem('academy_students', JSON.stringify(this.students));
   }
 
   addHobby(): void {

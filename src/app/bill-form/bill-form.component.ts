@@ -11,7 +11,7 @@ import {
 } from '../models/customer-form.interface';
 import { Customer } from '../models/customer.interface';
 import { CustomerService } from '../services/customer.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { tap, concatMap, map, catchError, of } from 'rxjs';
 import { BillService } from '../services/bill.service';
@@ -31,7 +31,8 @@ export class BillFormComponent {
   constructor(
     private readonly customerservice: CustomerService,
     private readonly billservice: BillService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
   ) {
     this.form = this.createForm();
     this.getAllCustomer();
@@ -182,7 +183,10 @@ export class BillFormComponent {
   delete(): void {
     if (confirm('Sicuro di voler eliminare la fattura?')) {
       this.billservice.deleteBill(this.id!).subscribe({
-        next: () => alert('Fattura eliminata'),
+        next: () => {
+          alert('Fattura eliminata');
+          this.router.navigateByUrl('/bills');
+        },
       });
     } else {
       alert('Eliminazione annullata');

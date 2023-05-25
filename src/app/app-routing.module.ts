@@ -14,14 +14,14 @@ const loggedIn: CanActivateFn = (route) => {
 };
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'students', component: StudentsComponent },
   {
     path: 'students',
     canActivate: [loggedIn],
     children: [
       { path: ':id', component: StudentFormComponent },
-      { path: '', component: StudentFormComponent },
+      { path: '', component: StudentsComponent },
     ],
   },
   { path: 'form', component: StudentFormComponent },
@@ -32,10 +32,12 @@ const routes: Routes = [
       { path: ':id', component: CustomerFormComponent },
       { path: '', component: CustomersComponent },
     ],
+    canActivate: [loggedIn],
   },
   { path: 'bill/add', component: BillFormComponent },
   {
     path: 'bills',
+    canActivate: [loggedIn],
     children: [
       { path: ':id', component: BillFormComponent },
       { path: '', component: BillsComponent },
