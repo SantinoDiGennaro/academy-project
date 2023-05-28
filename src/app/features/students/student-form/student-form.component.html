@@ -1,0 +1,279 @@
+<form
+  class="d-flex flex-column ps-5 gap-2 mt-3 pb-3"
+  style="width: 250px"
+  [formGroup]="form"
+  style="
+    background-color: azure;
+    width: fit-content;
+    padding: 20px;
+    border: solid 2px black;
+    border-radius: 5px;
+  "
+>
+  <div
+    formGroupName="personalInformation"
+    class="d-flex gap-2"
+    style="
+      background-color: azure;
+      width: fit-content;
+      padding: 20px;
+      border: solid 2px black;
+      border-radius: 5px;
+    "
+  >
+    <mat-form-field>
+      <mat-label>Nome: </mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Cognome </mat-label>
+      <input matInput formControlName="surname" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Età</mat-label>
+      <input matInput type="number" formControlName="age" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Sesso</mat-label>
+      <mat-select>
+        <mat-option value="M">Uomo</mat-option>
+        <mat-option value="F">Donna</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div
+    formGroupName="location"
+    class="d-flex gap-2"
+    style="
+      background-color: azure;
+      width: fit-content;
+      padding: 20px;
+      border: solid 2px black;
+      border-radius: 5px;
+    "
+  >
+    <mat-form-field>
+      <mat-label>Città</mat-label>
+      <input matInput formControlName="city" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>CAP</mat-label>
+      <input matInput formControlName="postalCode" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Via</mat-label>
+      <input matInput formControlName="address" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Regione</mat-label>
+      <input matInput formControlName="state" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Stato</mat-label>
+      <input matInput formControlName="country" />
+    </mat-form-field>
+  </div>
+
+  <div
+    formArrayName="hobbies"
+    class="d-flex flex-column gap-2"
+    style="
+      background-color: azure;
+      width: fit-content;
+      padding: 20px;
+      border: solid 2px black;
+      border-radius: 5px;
+    "
+  >
+    <ng-container *ngFor="let hobby of hobbies.controls; let i = index">
+      <div [formGroupName]="i" class="d-flex gap-2">
+        <mat-form-field>
+          <mat-label>Hobby</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Icona</mat-label>
+          <input matInput formControlName="icon" />
+        </mat-form-field>
+
+        <button class="btn" (click)="removeHobby(i)">
+          <i class="fa-solid fa-xmark" style="color: #ff0000"></i>
+        </button>
+      </div>
+    </ng-container>
+    <button class="btn btn-success" (click)="addHobby()">Add hobby</button>
+  </div>
+
+  <label for="pets">Animali:</label>
+  <div
+    formArrayName="pets"
+    style="
+      background-color: azure;
+      width: fit-content;
+      padding: 20px;
+      border: solid 2px black;
+      border-radius: 5px;
+    "
+  >
+    <ng-container *ngFor="let pet of pets.controls; let i = index">
+      <div [formGroupName]="i" class="d-flex gap-2">
+        <mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Tipo</mat-label>
+          <mat-select formControlName="type">
+            <mat-option value="dog">Cane</mat-option>
+            <mat-option value="cat">Gatto</mat-option>
+            <mat-option value="rabbit">Coniglio</mat-option>
+            <mat-option value="snake">Serpente</mat-option>
+            <mat-option value="mouse">Pantego</mat-option>
+            <mat-option value="hamster">Criceto</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Razza</mat-label>
+          <input matInput formControlName="breed" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Sesso</mat-label>
+          <mat-select>
+            <mat-option value="M">Maschio</mat-option>
+            <mat-option value="F">Femmina</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Età</mat-label>
+          <input matInput type="number" formControlName="age" />
+        </mat-form-field>
+
+        <button class="btn" (click)="removePet(i)">
+          <i class="fa-solid fa-xmark" style="color: #ff0000"></i>
+        </button>
+      </div>
+    </ng-container>
+    <button class="btn btn-success mt-2" (click)="addPet()">Add pet</button>
+  </div>
+
+  <label for="languages">Language:</label>
+  <div
+    formArrayName="knownLanguages"
+    style="
+      background-color: azure;
+      width: fit-content;
+      padding: 20px;
+      border: solid 2px black;
+      border-radius: 5px;
+    "
+  >
+    <ng-container
+      *ngFor="let language of knownLanguages.controls; let i = index"
+    >
+      <div [formGroupName]="i" class="d-flex gap-2">
+        <mat-form-field>
+          <mat-label>Lingua</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Icona</mat-label>
+          <input matInput formControlName="icon" />
+        </mat-form-field>
+        <button class="btn" (click)="removeLanguage(i)">
+          <i class="fa-solid fa-xmark" style="color: #ff0000"></i>
+        </button>
+      </div>
+    </ng-container>
+    <button class="btn btn-success mt-2" (click)="addLanguage()">
+      Add language
+    </button>
+  </div>
+
+  <label for="jobExperiences">Esperienze:</label>
+  <div
+    formArrayName="jobExperiences"
+    style="
+      background-color: azure;
+      width: fit-content;
+      padding: 20px;
+      border: solid 2px black;
+      border-radius: 5px;
+    "
+  >
+    <ng-container
+      *ngFor="let experience of jobExperiences.controls; let i = index"
+    >
+      <div [formGroupName]="i" class="d-flex flex-column gap-2">
+        <div class="d-flex gap-2">
+          <mat-form-field>
+            <mat-label>Ruolo</mat-label>
+            <input matInput formControlName="name" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Compagnia</mat-label>
+            <input matInput formControlName="company" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Descrizione</mat-label>
+            <input matInput formControlName="description" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Inizio</mat-label>
+            <input matInput type="date" formControlName="startDate" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Fine</mat-label>
+            <input matInput type="date" formControlName="endDate" />
+          </mat-form-field>
+
+          <button class="btn" (click)="removeJob(i)">
+            <i class="fa-solid fa-xmark" style="color: #ff0000"></i>
+          </button>
+        </div>
+
+        <div formArrayName="tags" class="d-flex flex-row">
+          <div
+            *ngFor="let tag of experience.controls.tags.controls; let i = index"
+            class="d-flex"
+          >
+            <mat-form-field>
+              <mat-label>Tag</mat-label>
+              <input matInput [formControlName]="i" />
+            </mat-form-field>
+            <button class="btn" (click)="removeTag(experience, i)">
+              <i class="fa-solid fa-xmark" style="color: #ff0000"></i>
+            </button>
+          </div>
+
+          <button class="btn btn-success" (click)="addTag(experience)">
+            Add tag
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <button class="btn btn-success mt-2" (click)="addJobExperience()">
+      Add experience
+    </button>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="save()">
+    {{ edit ? "Salva" : "Aggiungi" }} studente
+  </button>
+</form>

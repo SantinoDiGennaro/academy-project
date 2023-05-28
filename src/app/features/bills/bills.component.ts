@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { Bill } from 'src/app/models/bill.interface';
-import { Customer } from 'src/app/models/customer.interface';
-import { BillService } from 'src/app/services/bill.service';
-import { CustomerService } from 'src/app/services/customer.service';
+import { Component, Input } from '@angular/core';
+import { BillService } from 'src/app/features/bills/providers/services/bill-http.service';
+import { CustomerService } from 'src/app/features/customers/providers/services/customer-http.service';
+import { Customer } from '../customers/models/customer.interface';
+import { Bill } from './models/bill.interface';
 
 @Component({
   selector: 'academy-bills',
@@ -10,20 +10,15 @@ import { CustomerService } from 'src/app/services/customer.service';
   styleUrls: ['./bills.component.scss'],
 })
 export class BillsComponent {
-  bills: Array<Bill> | undefined;
+  @Input() bills: Array<Bill> | undefined;
+  @Input() customers: Array<any> | undefined;
   minValue: number = 0;
   maxValue: number = 0;
-  customers: Array<any> | undefined;
 
   constructor(
     private readonly billservice: BillService,
     private readonly customerservice: CustomerService
   ) {}
-
-  ngOnInit(): void {
-    this.getAll();
-    this.getAllCustomer();
-  }
 
   getAll(): void {
     this.billservice.getAllBills().subscribe({

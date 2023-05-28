@@ -1,0 +1,46 @@
+<form
+  *ngIf="form"
+  [formGroup]="form"
+  class="d-flex flex-column p-5 mt-5 container"
+  style="
+    background-color: azure;
+    width: fit-content;
+    padding: 20px;
+    border: solid 2px black;
+    border-radius: 10px;
+  "
+>
+  <mat-form-field>
+    <mat-label>Numero fattura</mat-label>
+    <input matInput formControlName="numero" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Importo fattura</mat-label>
+    <input matInput formControlName="importo" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Cliente</mat-label>
+    <input matInput list="clienti" (change)="selectClient($event)" />
+  </mat-form-field>
+
+  <datalist id="clienti">
+    <option
+      *ngFor="let customer of customers"
+      [value]="customer.ragioneSociale"
+    ></option>
+  </datalist>
+
+  <div class="d-flex gap-2">
+    <button class="btn btn-outline-primary" type="button" (click)="save()">
+      {{ edit ? "Salva" : "Aggiungi" }} fattura
+    </button>
+    <a class="btn btn-outline-primary" type="button" routerLink="/bills"
+      >Torna alla lista fatture</a
+    >
+    <button *ngIf="edit" class="btn btn-outline-danger" (click)="delete()">
+      Elimina fattura
+    </button>
+  </div>
+</form>

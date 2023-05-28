@@ -1,5 +1,5 @@
-import { Component, OnChanges } from '@angular/core';
-import { LoginService } from 'src/app/services/login.service';
+import { Component } from '@angular/core';
+import { LoginService } from 'src/app/features/login/providers/services/login.service';
 
 @Component({
   selector: 'academy-navbar',

@@ -1,13 +1,6 @@
 import { NgModule, inject } from '@angular/core';
 import { CanActivateFn, RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { StudentsComponent } from './components/students/students.component';
-import { StudentFormComponent } from './components/student-form/student-form.component';
-import { CustomersComponent } from './features/customers/customers.component';
-import { BillsComponent } from './features/bills/bills.component';
-import { CustomerFormComponent } from './features/customer-form/customer-form.component';
-import { BillFormComponent } from './bill-form/bill-form.component';
-import { LoggedGuard } from './services/guards/logged.guard';
+import { LoggedGuard } from './features/login/providers/services/guards/logged.guard';
 
 const loggedIn: CanActivateFn = (route) => {
   return inject(LoggedGuard).canActivate();
@@ -15,38 +8,41 @@ const loggedIn: CanActivateFn = (route) => {
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./features/login/login.component').then((c) => c.LoginComponent),
+  },
+
   {
     path: 'students',
+    loadChildren: () =>
+      import('./features/students/students.module').then(
+        (m) => m.StudentsModule
+      ),
     canActivate: [loggedIn],
-    children: [
-      { path: ':id', component: StudentFormComponent },
-      { path: '', component: StudentsComponent },
-    ],
   },
-  { path: 'form', component: StudentFormComponent },
-  { path: 'customers/add', component: CustomerFormComponent },
+
   {
     path: 'customers',
-    children: [
-      { path: ':id', component: CustomerFormComponent },
-      { path: '', component: CustomersComponent },
-    ],
+    loadChildren: () =>
+      import('./features/customers/customers.module').then(
+        (m) => m.CustomersModule
+      ),
     canActivate: [loggedIn],
   },
-  { path: 'bill/add', component: BillFormComponent },
+
   {
     path: 'bills',
+    loadChildren: () =>
+      import('./features/bills/bills.module').then((m) => m.BillsModule),
     canActivate: [loggedIn],
-    children: [
-      { path: ':id', component: BillFormComponent },
-      { path: '', component: BillsComponent },
-    ],
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { bindToComponentInputs: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Customer } from 'src/app/models/customer.interface';
-import { CustomerService } from 'src/app/services/customer.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { CustomerService } from 'src/app/features/customers/providers/services/customer-http.service';
+import { Customer } from './models/customer.interface';
 
 @Component({
   selector: 'academy-customers',
@@ -8,15 +8,13 @@ import { CustomerService } from 'src/app/services/customer.service';
   styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent implements OnInit {
-  customers: Array<Customer> | undefined;
+  @Input() customers: Array<Customer> | undefined;
   amount: number = 0;
   name: string = '';
 
   constructor(private readonly customerservice: CustomerService) {}
 
-  ngOnInit(): void {
-    this.getAll();
-  }
+  ngOnInit(): void {}
 
   getAll(): void {
     this.customerservice.getAllCustomers().subscribe({
