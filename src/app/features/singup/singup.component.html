@@ -1,0 +1,78 @@
+<form
+  *ngIf="form"
+  class="container w-25 p-5 mt-5"
+  style="border-radius: 10px; border: solid 1px black; background-color: azure"
+  [formGroup]="form"
+>
+  <div *ngIf="register" class="form-group gap-2">
+    <input
+      class="form-control mb-2"
+      type="text"
+      placeholder="Username"
+      formControlName="username"
+    />
+    <input
+      class="form-control mb-2"
+      type="password"
+      placeholder="Inserire la password"
+      formControlName="password"
+    />
+    <input
+      class="form-control mb-2"
+      type="password"
+      placeholder="Confermare la password"
+      formControlName="confPassword"
+    />
+    <input
+      class="form-control mb-2"
+      type="email"
+      placeholder="Inserire la mail"
+      formControlName="email"
+    />
+    <input
+      class="form-control"
+      type="email"
+      placeholder="Confermare la mail"
+      formControlName="confEmail"
+    />
+    <div class="d-flex justify-content-evenly">
+      <button class="btn btn-primary mt-3" type="button" (click)="signup()">
+        Registrati
+      </button>
+      <button
+        class="btn btn-primary mt-3"
+        type="button"
+        (click)="register = !register"
+      >
+        vai a login
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!register">
+    <input
+      class="form-control mb-2"
+      type="text"
+      placeholder="Username"
+      formControlName="username"
+    />
+    <input
+      class="form-control"
+      type="password"
+      placeholder="Inserire la password"
+      formControlName="password"
+    />
+    <div class="d-flex justify-content-evenly">
+      <button class="btn btn-primary mt-3" type="button" (click)="login()">
+        Login
+      </button>
+      <button
+        class="btn btn-primary mt-3"
+        type="button"
+        (click)="register = !register"
+      >
+        vai alla registrazione
+      </button>
+    </div>
+  </div>
+</form>

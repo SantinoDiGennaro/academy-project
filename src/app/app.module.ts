@@ -12,9 +12,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoggedGuard } from './features/login/providers/services/guards/logged.guard';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { isLoggedDirective } from './features/login/directives/isLogged.directive';
+import { SingupComponent } from './features/singup/singup.component';
+import { UserListComponent } from './features/singup/user-list/user-list.component';
+import { UserEditComponent } from './features/singup/user-edit/user-edit.component';
+import { isAdminDirective } from './features/singup/directives/isAdmin.directive';
+import { AdminGuard } from './features/singup/providers/services/guards/admin.guard';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    SingupComponent,
+    UserListComponent,
+    UserEditComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,11 +34,14 @@ import { isLoggedDirective } from './features/login/directives/isLogged.directiv
     MatToolbarModule,
     BrowserAnimationsModule,
     isLoggedDirective,
+    isAdminDirective,
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: DelayInterceptor, multi: true },
     LoggedGuard,
+    AdminGuard,
   ],
   bootstrap: [AppComponent],
 })

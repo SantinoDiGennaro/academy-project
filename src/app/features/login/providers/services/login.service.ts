@@ -2,22 +2,24 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
-import { User } from '../../models/user.interface';
+import { Signup } from 'src/app/features/singup/models/singup.interface';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-  user$: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  user$: BehaviorSubject<Signup | null> = new BehaviorSubject<Signup | null>(
+    null
+  );
   constructor(
     private readonly storage: StorageService,
     private readonly router: Router
   ) {
-    const user = this.storage.getItem<User>('academy_logged_user');
+    const user = this.storage.getItem<Signup>('academy_logged_user');
     if (user) {
       this.setUser(user);
     }
   }
 
-  setUser(user: User): void {
+  setUser(user: Signup): void {
     this.user$.next(user);
     this.storage.setItem('academy_logged_user', user);
   }

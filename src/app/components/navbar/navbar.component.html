@@ -4,6 +4,12 @@
   <a class="btn ms-5" style="color: white" routerLink="/students"> Studenti </a>
   <a class="btn ms-5" style="color: white" routerLink="/customers"> Clienti </a>
   <a class="btn ms-5" style="color: white" routerLink="/bills"> Fatture </a>
+  <a *isAdmin="" class="btn ms-5" style="color: white" routerLink="/users-list">
+    Utenti
+  </a>
+  <a class="btn ms-5" style="color: white" routerLink="/user-edit/{{ id }}">
+    Modifica
+  </a>
 
   <div class="dropdown-center">
     <button

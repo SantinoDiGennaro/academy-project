@@ -1,19 +1,33 @@
 import { NgModule, inject } from '@angular/core';
 import { CanActivateFn, RouterModule, Routes } from '@angular/router';
 import { LoggedGuard } from './features/login/providers/services/guards/logged.guard';
+import { UserListComponent } from './features/singup/user-list/user-list.component';
+import { UserEditComponent } from './features/singup/user-edit/user-edit.component';
+import { SingupComponent } from './features/singup/singup.component';
+import { AdminGuard } from './features/singup/providers/services/guards/admin.guard';
 
 const loggedIn: CanActivateFn = (route) => {
   return inject(LoggedGuard).canActivate();
 };
 
+const auth: CanActivateFn = (route) => {
+  return inject(AdminGuard).canActivate();
+};
+
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-
+  { path: 'login', component: SingupComponent },
+  { path: 'users-list', component: UserListComponent, canActivate: [auth] },
   {
-    path: 'login',
-    loadComponent: () =>
-      import('./features/login/login.component').then((c) => c.LoginComponent),
+    path: 'user-edit/:id',
+    component: UserEditComponent,
+    canActivate: [loggedIn],
   },
+  // {
+  //   path: 'login',
+  //   loadComponent: () =>
+  //     import('./features/login/login.component').then((c) => c.LoginComponent),
+  // },
 
   {
     path: 'students',
